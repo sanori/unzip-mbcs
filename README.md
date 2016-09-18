@@ -24,6 +24,23 @@ optional arguments:
                         character encoding of filename in the .zip
 ```
 
+
+## API
+### listZip(filename, encoding='utf-8')
+Return the information of the files in zip archive `filename`
+with character `encoding`
+
+### extractZip(filename, encoding='utf-8', filters=None)
+Extract files in zip archive `filename` on current directory.
+Assume that the file names in zip archive are encoded as `encoding`.
+Only the files prefixed the values of `filters` list are extracted
+if `filters` are provided.
+
+### fixZipFilename(filename, enc)
+Fix `filename` as UNICODE string which is originally encoded as `enc`.
+Works for both Python 2 and 3.
+
+
 ## Motivation
 The .ZIP format, PKZIP compression, have been widely used. Some valuable data are archived as .zip file.
 But, in non-ASCII, non-Western environment, it makes trouble due to filenames.
@@ -33,4 +50,4 @@ Most of zip file entries are encoded as legacy character encoding, local charset
 
 In modern UNICODE based environment or global data processing environment such as Linux, this makes inconvinience, less portability, mangled file names, fail to extract the file, and so on.
 
-This module may mitigate the inconviniences. 
+This module may mitigate the inconviniences.
