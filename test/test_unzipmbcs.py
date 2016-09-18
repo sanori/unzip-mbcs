@@ -22,7 +22,8 @@ class TestFromZip(unittest.TestCase):
                   'set PYTHONIOENCODING as your filesystem encoding!')
             return
         unzipmbcs.extractZip(self.filename, self.encoding)
-        map(lambda x: self.assertTrue(os.path.isfile(x)), self.expected)
+        map(lambda x: self.assertTrue(os.path.exists(x), x + ' not exist'),
+            self.expected)
 
         # clean-up
         files = list(self.expected)   # clone the list
