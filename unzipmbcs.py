@@ -33,9 +33,20 @@ def fixZipFilename(filename, enc):
     Works for both Python 2 and 3.
     """
     if sys.version_info[0] == 2:
-        return filename.decode(enc)
+        bstr = filename
     else:
-        return bytes(filename, 'cp437').decode(enc)
+        bstr = bytes(filename, 'cp437')
+
+    try:
+        result = bstr.decode(enc)
+    except UnicodeDecodeError as e:
+        # try to fix sjis backspace -> slash conversion
+        if encoding == 'sjis' and bstr[e.start + 1] == '/':
+            bstr[e.start + 1] = '\\'
+            result = bstr.decode()
+        else:
+            raise e
+    return result
 
 
 def _extractFileFromZip(z, fn, ofn):
@@ -62,14 +73,8 @@ def extractZip(filename, encoding='utf-8', filters=None):
         try:
             ofn = fixZipFilename(fn, encoding)
         except UnicodeDecodeError as e:
-            # try to fix sjis backspace -> slash conversion
-            if encoding == 'sjis' and fn[e.start + 1] == '/':
-                nl = list(fn)
-                nl[e.start + 1] = '\\'
-                ofn = fixZipFilename(''.join(nl), encoding)
-            else:
-                print('Decode error. Continue')
-                ofn = fn
+            print('Decode error. Continue')
+            ofn = fn
         if filters and (not ofn.startswith(tuple(filters))):
             continue
         if ofn[0] == '/':
