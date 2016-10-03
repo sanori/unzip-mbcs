@@ -7,9 +7,14 @@ Major non-UTF8 encodings by languages:
  * Japanese: sjis (shift_jis), cp932, euc-jp
  * Chinese: gbk, gb18030, gb2312, cp936, hkscs, big5, cp950
 
+## Install
+```
+pip install unzipmbcs
+```
+
 ## CLI Usage
 ```
-usage: unzipmbcs.py [-h] [-e ENCODING] cmd zipfile [target [target ...]]
+usage: unzipmbcs [-h] [-e ENCODING] cmd zipfile [target [target ...]]
 
 unzip for non-UTF8 filenames in zip archive
 
