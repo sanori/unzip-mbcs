@@ -121,7 +121,7 @@ def listZip(filename, encoding='utf-8'):
     ), zil)
 
 
-def main():
+def _main():
     parser = argparse.ArgumentParser(
         description='unzip for non-UTF8 filenames in zip archive')
     parser.add_argument('cmd', help='commands: l(list), x(extract)')
@@ -147,4 +147,4 @@ def main():
         print('Unknown command:', args.cmd)
 
 if __name__ == '__main__':
-    main()
+    _main()

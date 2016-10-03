@@ -1,7 +1,7 @@
 from distutils.core import setup
 setup(
     name='unzipmbcs',
-    packages=['unzipmbcs'],
+    py_modules=['unzipmbcs'],
     version='0.1.0',
     description='UnZip for non-UTF8 encoding such as cp949, sjis, gbk, euc-kr, euc-jp, and gb2312',
     author='Joo-Won Jung',
@@ -14,4 +14,9 @@ setup(
                  'License :: OSI Approved :: Apache Software License',
                  'Programming Language :: Python :: 2',
                  'Programming Language :: Python :: 3'],
+    entry_points={
+        'console_scripts': [
+            'unzipmbcs=unzipmbcs:_main',
+        ],
+    },
 )
