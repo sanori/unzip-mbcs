@@ -59,7 +59,7 @@ def _extractFileFromZip(z, fn, ofn):
     f.close()
 
 
-def extractZip(filename, encoding='utf-8', filters=None):
+def extractZip(filename, encoding='utf-8', filters=None, password=None):
     """
     Extract files in zip archive `filename` on current directory.
     Assume that the file names in zip archive are encoded as `encoding`.
@@ -67,6 +67,8 @@ def extractZip(filename, encoding='utf-8', filters=None):
     if `filters` are provided.
     """
     z = zipfile.ZipFile(filename, 'r')
+    if password:
+        z.setpassword(bytes(password, 'cp437'))
     l = z.namelist()
     for fn in l:
         if len(fn) == 0 or fn[-1] == '/':
@@ -129,6 +131,9 @@ def _main():
     parser.add_argument('-e', '--encoding',
                         help='character encoding of filename in the .zip',
                         default='utf-8')
+    parser.add_argument('-p', '--password',
+                        help='password for encrypted .zip',
+                        default=None)
     parser.add_argument('zipfile', help='.zip file to unzip')
     parser.add_argument('target', nargs='*',
                         help='file prefix to extract')
@@ -143,7 +148,7 @@ def _main():
                   % tuple([entry[1]] + list(entry[2][:-1]) + [entry[0]]))
     elif args.cmd == 'x':
         extractZip(args.zipfile, encoding=args.encoding,
-                   filters=args.target)
+                   filters=args.target, password=args.password)
     else:
         print('Unknown command:', args.cmd)
 

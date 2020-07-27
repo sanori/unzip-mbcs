@@ -27,6 +27,8 @@ optional arguments:
   -h, --help            show this help message and exit
   -e ENCODING, --encoding ENCODING
                         character encoding of filename in the .zip
+  -p PASSWORD, --password PASSWORD
+                        password for encrypted .zip
 ```
 
 
@@ -35,11 +37,12 @@ optional arguments:
 Return the information of the files in zip archive `filename`
 with character `encoding`
 
-### extractZip(filename, encoding='utf-8', filters=None)
+### extractZip(filename, encoding='utf-8', filters=None, password=None)
 Extract files in zip archive `filename` on current directory.
 Assume that the file names in zip archive are encoded as `encoding`.
 Only the files prefixed the values of `filters` list are extracted
 if `filters` are provided.
+Use `password` on encrypted zip archive.
 
 ### fixZipFilename(filename, enc)
 Fix `filename` as UNICODE string which is originally encoded as `enc`.
