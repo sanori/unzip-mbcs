@@ -26,8 +26,6 @@ import zipfile
 import zlib
 import argparse
 
-__version__ = '0.1.1'
-
 def fixZipFilename(filename, enc):
     """
     Fix `filename` as UNICODE string which is originally encoded as `enc`.
