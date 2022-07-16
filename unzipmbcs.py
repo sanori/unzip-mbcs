@@ -26,8 +26,6 @@ import zipfile
 import zlib
 import argparse
 
-__version__ = '0.1.1'
-
 def fixZipFilename(filename, enc):
     """
     Fix `filename` as UNICODE string which is originally encoded as `enc`.
@@ -41,7 +39,7 @@ def fixZipFilename(filename, enc):
     try:
         result = bstr.decode(enc)
     except UnicodeDecodeError as e:
-        # try to fix sjis backspace -> slash conversion
+        # try to fix sjis backslash -> slash conversion
         if enc == 'sjis' and bstr[e.start + 1] == '/':
             bstr[e.start + 1] = '\\'
             result = bstr.decode()
