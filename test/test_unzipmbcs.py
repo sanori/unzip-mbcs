@@ -24,9 +24,9 @@ def clearFiles(fileList):
             entry = os.path.dirname(entry)
 
 class TestFromZip(unittest.TestCase):
-    filename = 'NewFolder.zip'
+    filename = 'win-default.zip'
     encoding = 'cp949'
-    expected = [u'새 텍스트 문서.txt', u'새 폴더/', u'새 폴더/한글문서.txt']
+    expected = [u'똠방각하.txt', u'한글 디렉토리/새 텍스트 문서.txt']
 
     def testListZip(self):
         result = unzipmbcs.listZip(self.filename, self.encoding)
