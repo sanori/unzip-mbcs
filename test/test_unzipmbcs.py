@@ -6,6 +6,22 @@ import unittest
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 import unzipmbcs
 
+def setUpModule():
+    if (sys.getfilesystemencoding().lower() != 'utf-8') and (not os.environ.get('PYTHONIOENCODING')):
+        raise Exception('non-UTF8 filesystem. set PYTHONIOENCODING as your filesystem encoding!')
+
+def clearFiles(fileList):
+    for entry in fileList:
+        if (os.path.isfile(entry)):
+            os.remove(entry)
+        elif (len(os.listdir(entry)) == 0):
+            os.rmdir(entry)
+        entry = os.path.dirname(entry)
+        while entry != '':
+            if len(os.listdir(entry)) > 0:
+                break;
+            os.rmdir(entry)
+            entry = os.path.dirname(entry)
 
 class TestFromZip(unittest.TestCase):
     filename = 'NewFolder.zip'
@@ -17,22 +33,10 @@ class TestFromZip(unittest.TestCase):
         self.assertEqual(list(map(lambda x: x[0], result)), self.expected)
 
     def testExtractZip(self):
-        if (sys.getfilesystemencoding().lower() != 'utf-8') and (not os.environ.get('PYTHONIOENCODING')):
-            print('Warning: non-UTF8 filesystem.',
-                  'set PYTHONIOENCODING as your filesystem encoding!')
-            return
         unzipmbcs.extractZip(self.filename, self.encoding)
         map(lambda x: self.assertTrue(os.path.exists(x), x + ' not exist'),
             self.expected)
-
-        # clean-up
-        files = list(self.expected)   # clone the list
-        files.reverse()
-        for f in files:
-            if (os.path.isfile(f)):
-                os.remove(f)
-            else:
-                os.rmdir(f)
+        clearFiles(self.expected)
 
 class TestEncryptedZip(unittest.TestCase):
     filename = 'lhaplus-zkenc.zip'
@@ -57,15 +61,7 @@ class TestEncryptedZip(unittest.TestCase):
         unzipmbcs.extractZip(self.filename, self.encoding, password=self.password)
         map(lambda x: self.assertTrue(os.path.exists(x), x + ' not exist'),
             self.expected)
-
-        # clean-up
-        files = list(self.expected)   # clone the list
-        files.reverse()
-        for f in files:
-            if (os.path.isfile(f)):
-                os.remove(f)
-            else:
-                os.rmdir(f)
+        clearFiles(self.expected)
 
 if __name__ == '__main__':
     unittest.main()
