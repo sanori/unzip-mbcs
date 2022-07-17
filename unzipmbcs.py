@@ -53,7 +53,12 @@ def _extractFileFromZip(z, fn, ofn):
     extract a file `fn` in ZipFile `z` as `ofn`
     """
     f = open(ofn, 'wb')
-    f.write(z.read(fn))
+    try:
+        f.write(z.read(fn))
+    except RuntimeError as e:
+        f.close()
+        os.remove(ofn)
+        raise e
     f.close()
 
 
