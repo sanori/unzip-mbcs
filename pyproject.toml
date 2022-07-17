@@ -4,13 +4,12 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "unzipmbcs"
-version = "0.1.2"
+version = "0.2.0"
 description = "UnZip for non-UTF8 encoding such as cp949, sjis, gbk, euc-kr, euc-jp, and gb2312"
 readme = "README.md"
-license = { file = "LICENSE.txt" }
 keywords= [
   "unzip", "pkzip", "non-UTF8", "mbcs",
-  "cp949", "sjis", "shift_jis", "gbk", "gb18030"
+  "cp949", "sjis", "shift_jis", "gbk", "gb18030",
 ]
 authors = [
   {name="Joo-Won Jung", email="sanori@gmail.com"},
