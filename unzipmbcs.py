@@ -47,6 +47,10 @@ def fixZipFilename(filename, enc):
             raise e
     return result
 
+def transcodeBytes(str, toEnc, fromEnc='utf-8'):
+    if sys.version_info[0] == 2:
+        return str.decode(fromEnc).encode(toEnc)
+    return bytes(str, toEnc)
 
 def _extractFileFromZip(z, fn, ofn):
     """
@@ -71,7 +75,7 @@ def extractZip(filename, encoding='utf-8', filters=None, password=None):
     """
     z = zipfile.ZipFile(filename, 'r')
     if password:
-        z.setpassword(bytes(password, 'cp437'))
+        z.setpassword(transcodeBytes(password, encoding))
     l = z.namelist()
     for fn in l:
         if len(fn) == 0 or fn[-1] == '/':
